@@ -18,9 +18,6 @@ module SupermarketFour
     private
 
     def calculate_total(all_items)
-      discounts.each do |items, discount|
-        all_items.gsub!(items, "#{discount} ")
-      end
       prices.each do |item, cost|
         all_items.gsub!(item, "#{cost} ")
       end
@@ -35,12 +32,8 @@ module SupermarketFour
       @log
     end
 
-    def discounts
-      @discounts ||= @rules.select {|item, price| item.length > 1}
-    end
-
     def prices
-      @prices ||= @rules.select {|item, price| item.length == 1}
+      @prices ||= @rules.sort_by { |item, cost| item.length }.reverse
     end
   end
 end
