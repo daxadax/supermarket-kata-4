@@ -11,13 +11,14 @@ module SupermarketFour
 
     def total
       return 0 if log.empty?
+      @total = log.dup.split(//).sort.join
       discounts.each do |items, discount|
-        log.gsub!(items, "#{discount} ")
+        @total.gsub!(items, "#{discount} ")
       end
       prices.each do |item, cost|
-        log.gsub!(item, "#{cost} ")
+        @total.gsub!(item, "#{cost} ")
       end
-      log.split.map(&:to_i).reduce(:+)
+      @total.split.map(&:to_i).reduce(:+)
     end
 
     private
